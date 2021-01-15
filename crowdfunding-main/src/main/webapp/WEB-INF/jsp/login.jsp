@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="keys" content="">
 
-<%@ include file="/WEB-INF/jsp/common/css.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/css.jsp"%>
 
 <link rel="stylesheet" href="${PATH}/static/css/login.css">
 
@@ -30,7 +30,8 @@
 
 	<div class="container">
 
-		<form id="loginForm" class="form-signin" role="form" action="doLogin" method="post">
+		<form id="loginForm" class="form-signin" role="form" action="${PATH}/login" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<h2 class="form-signin-heading">
 				<i class="glyphicon glyphicon-log-in"></i> 用户登录
 			</h2>
@@ -44,9 +45,7 @@
 			<div class="checkbox">
 				<label> <input type="checkbox" value="remember-me" /> 记住我
 				</label>
-				<c:if test="${not empty loginError }">
-					<div class="form-group has-success has-feedback">${loginError }</div>
-				</c:if>
+				<div class="form-group has-success has-feedback">${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
 				<br /> <label> 忘记密码 </label> <label style="float: right"> <a href="${PATH}/regist">我要注册</a>
 				</label>
 			</div>
@@ -54,8 +53,8 @@
 		</form>
 	</div>
 
-	<%@ include file="/WEB-INF/jsp/common/js.jsp" %>
-	
+	<%@ include file="/WEB-INF/jsp/common/js.jsp"%>
+
 	<script type="text/javascript">
 		function dologin() {
 			// 			var type = $(":selected").val();

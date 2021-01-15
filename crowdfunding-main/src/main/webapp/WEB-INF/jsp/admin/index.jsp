@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="zh_CN">
 
@@ -75,12 +76,14 @@ table tbody td:nth-child(even) {
 							</button>
 						</form>
 
+						<security:authorize access="hasAnyRole('SA-超级管理员','PM - 项目经理')">
 						<button id="deleteBatch" type="button" class="btn btn-danger" style="float: right; margin-left: 10px;">
 							<i class="glyphicon glyphicon-remove"></i> 删除
 						</button>
 						<button type="button" class="btn btn-primary" style="float: right;" onclick="window.location.href='${PATH}/admin/toAdd'">
 							<i class="glyphicon glyphicon-plus"></i> 新增
 						</button>
+						</security:authorize>
 						<br>
 						<hr style="clear: both;">
 						<div class="table-responsive">

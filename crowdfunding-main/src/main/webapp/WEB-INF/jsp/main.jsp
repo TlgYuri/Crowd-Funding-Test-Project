@@ -37,7 +37,7 @@
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<div>
-							<a class="navbar-brand" style="font-size: 32px;" href="#">众筹平台 - 控制面板</a>
+							<a class="navbar-brand" style="font-size: 32px;" href="#">后台管理 - 控制面板</a>
 						</div>
 						
 					</div>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
@@ -43,7 +44,9 @@
 				<ol class="breadcrumb">
 					<li><a href="${PATH}/admin/main">首页</a></li>
 					<li><a href="${PATH}/admin/index">数据列表</a></li>
+					<security:authorize access="hasRole('SA-超级管理员')">
 					<li class="active">新增</li>
+					</security:authorize>
 				</ol>
 				<div class="panel panel-default">
 					<div class="panel-heading">

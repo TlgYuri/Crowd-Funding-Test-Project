@@ -243,6 +243,11 @@
 
 			//ajax请求  获取数据
 			$.get("${PATH}/menu/loadZTree", {}, function(data) {
+				if(data == "403") {
+					layer.msg("访问被拒绝",{time:1500,icon:5});
+					layer.close(index);
+					return ;
+				}
 				data.push({
 					"id" : 0,
 					"name" : "系统权限菜单",

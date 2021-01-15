@@ -27,8 +27,13 @@ public class TMenuServiceImpl implements TMenuService {
 	}
 	
 	@Override
-	public List<TMenu> listMenuParent() {
-		List<TMenu> menuList = listAllMenu();
+	public List<TMenu> listMenuByAdminId(Integer adminId) {
+		return menuMapper.selectPermissionsByAdminId(adminId);
+	}
+	
+	@Override
+	public List<TMenu> listMenuParentByAdminId(Integer adminId) {
+		List<TMenu> menuList = listMenuByAdminId(adminId);
 
 		List<TMenu> parentMenus = new ArrayList<TMenu>();
 		for(TMenu menu : menuList) {

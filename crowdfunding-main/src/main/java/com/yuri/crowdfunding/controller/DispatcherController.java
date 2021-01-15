@@ -10,11 +10,13 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yuri.crowdfunding.bean.TAdmin;
 import com.yuri.crowdfunding.bean.TMenu;
+import com.yuri.crowdfunding.component.TSecurityAdmin;
 import com.yuri.crowdfunding.service.TAdminService;
 import com.yuri.crowdfunding.service.TMenuService;
 import com.yuri.crowdfunding.util.Const;
@@ -36,18 +38,38 @@ public class DispatcherController {
 		return "index";
 	}
 
-	@RequestMapping("/login")
+	@RequestMapping("/toLogin")
 	public String login() {
 		log.debug("跳转到登录页面");
 		return "login";
 	}
 
-	@RequestMapping("/regist")
+	@RequestMapping("/toRegist")
 	public String regist() {
 		log.debug("跳转到注册页面");
 		return "regist";
 	}
 
+	@RequestMapping("/main")
+	public String main(HttpSession session) {
+		log.debug("跳转到管理员后台页面");
+		if (session != null) {
+			if(session.getAttribute("menus") == null) {
+				SecurityContextImpl sc = (SecurityContextImpl) session.getAttribute("SPRING_SECURITY_CONTEXT");
+				TSecurityAdmin admin = (TSecurityAdmin) sc.getAuthentication().getPrincipal();
+				Integer adminId = admin.getAdmin().getId();
+				List<TMenu> menus = menuService.listMenuParentByAdminId(adminId);
+				log.debug("查询到的管理员信息：{}",menus);
+				session.setAttribute("menus", menus);
+				return "main";
+			} else {
+				return "main";
+			}
+		} else {
+			return "redirect:/toLogin";
+		}
+	}
+	
 	@RequestMapping("/doLogin")
 	public String doLogin(String loginAccount, String loginPassword, HttpSession session, HttpServletRequest request) {
 		log.debug("用户登录,account={},password={}", loginAccount, loginPassword);
@@ -65,29 +87,16 @@ public class DispatcherController {
 			e.printStackTrace();
 			log.debug("登陆失败{}",e.getMessage());
 			request.setAttribute(Const.LOGIN_ERROR, e.getMessage());
-			return "login";
+			return "toLogin";
 		}
 	}
 
-	@RequestMapping("/main")
-	public String main(HttpSession session) {
-		log.debug("跳转到管理员后台页面");
-		if (session != null) {
-			List<TMenu> menus = menuService.listMenuParent();
-			log.debug("查询到的管理员信息：{}",menus);
-			session.setAttribute("menus", menus);
-			return "main";
-		} else {
-			return "redirect:/login";
-		}
-	}
-
-	@RequestMapping("/logout")
+	@RequestMapping("/doLogout")
 	public String logout(HttpSession session) {
 		log.debug("注销");
 		if (session != null) {
 			session.invalidate();
 		}
-		return "redirect:/login";
+		return "redirect:/index";
 	}
 }

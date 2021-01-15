@@ -27,4 +27,6 @@ public interface TMenuMapper {
     int updateByPrimaryKeySelective(TMenu record);
 
     int updateByPrimaryKey(TMenu record);
+
+	List<TMenu> selectPermissionsByAdminId(Integer adminId);
 }

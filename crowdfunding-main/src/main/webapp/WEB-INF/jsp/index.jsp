@@ -221,8 +221,8 @@ h3.break>a {
 					</div>
 					<div id="navbar" class="navbar-collapse collapse" style="float: right;">
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="${PATH}/login">登录</a></li>
-							<li><a href="${PATH}/regist">注册</a></li>
+							<li><a href="${PATH}/toLogin">登录</a></li>
+							<li><a href="${PATH}/toRegist">注册</a></li>
 						</ul>
 					</div>
 				</div>
